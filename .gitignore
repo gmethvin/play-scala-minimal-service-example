@@ -1,0 +1,8 @@
+logs
+target
+*.log
+*.iml
+.idea
+.idea_modules
+.vscode
+RUNNING_PID
