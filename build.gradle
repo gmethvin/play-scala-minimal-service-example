@@ -1,0 +1,37 @@
+plugins {
+    id 'play'
+}
+
+dependencies {
+    // add extra dependencies here
+}
+
+model {
+    components {
+        play {
+            platform play: '2.6.9', scala: '2.12', java: '1.8'
+            injectedRoutesGenerator = true
+
+            // reconfigure back to maven layout
+            sources {
+                java.source.srcDir "src/main/java"
+                scala.source.srcDir "src/main/scala"
+                resources.source.srcDir "src/main/resources"
+                routes.source.srcDir "src/main/resources"
+            }
+        }
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-release"
+        url "https://repo.lightbend.com/lightbend/maven-releases"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
