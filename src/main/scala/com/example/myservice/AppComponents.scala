@@ -6,14 +6,18 @@ import play.api.libs.json.{Format, Json, Writes}
 import play.api.mvc.{EssentialFilter, PathBindable}
 import play.api.routing.Router
 import play.api.routing.sird.PathBindableExtractor
-import play.api.{Application, ApplicationLoader, BuiltInComponentsFromContext}
+import play.api.{Application, ApplicationLoader, BuiltInComponentsFromContext, LoggerConfigurator}
 
 import scala.collection.mutable
 import scala.concurrent.Future
 
 class AppLoader extends ApplicationLoader {
-  override def load(context: ApplicationLoader.Context): Application =
+  override def load(context: ApplicationLoader.Context): Application = {
+    LoggerConfigurator(context.environment.classLoader).foreach {
+      _.configure(context.environment, context.initialConfiguration, Map.empty)
+    }
     new AppComponents(context).application
+  }
 }
 
 class AppComponents(context: ApplicationLoader.Context)
